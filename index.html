@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b18">
+  <meta name="description" content="Un guide simple pour trouver des diffusions sportives gratuites et officielles.">
+  <title>Sport Libre — les directs gratuits et officiels</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17211e;
+      --muted: #64716c;
+      --paper: #f4f6f1;
+      --card: #ffffff;
+      --line: #e4e9e2;
+      --green: #b9f36d;
+      --green-dark: #26421c;
+      --night: #101b18;
+      --shadow: 0 14px 40px rgba(25, 42, 34, .08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    .shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar {
+      height: 76px; display: flex; align-items: center; justify-content: space-between;
+      color: #f7fbf5;
+    }
+    .top-wrap { background: var(--night); }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; letter-spacing: -.04em; font-size: 1.18rem; }
+    .brand-mark { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; color: var(--night); background: var(--green); font-size: 19px; }
+    .topnote { color: #aab8b1; font-size: .86rem; }
+    .hero-wrap { background: var(--night); padding: 20px 0 58px; color: #f7fbf5; }
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 40px; }
+    .eyebrow { color: var(--green); font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { font-size: clamp(2.5rem, 5.5vw, 4.65rem); line-height: .98; letter-spacing: -.065em; max-width: 650px; margin: 14px 0 18px; }
+    .hero p { max-width: 540px; margin: 0; color: #b8c4be; font-size: 1.05rem; }
+    .hero-panel {
+      min-height: 230px; padding: 24px; position: relative; overflow: hidden; border-radius: 24px;
+      background: #1d2b26; border: 1px solid #31443a;
+    }
+    .hero-panel::after { content: ""; position: absolute; width: 190px; height: 190px; right: -30px; top: -50px; border-radius: 50%; background: var(--green); opacity: .95; }
+    .ball { position: absolute; z-index: 1; right: 32px; top: 19px; width: 124px; height: 124px; display: grid; place-items: center; font-size: 73px; transform: rotate(-14deg); }
+    .panel-copy { position: relative; z-index: 2; margin-top: 96px; max-width: 240px; }
+    .panel-copy strong { display: block; font-size: 1.1rem; }
+    .panel-copy span { color: #b8c4be; font-size: .9rem; }
+    main { padding: 38px 0 70px; }
+    .section-head { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 20px; }
+    .section-head h2 { margin: 0; font-size: 1.7rem; letter-spacing: -.045em; }
+    .section-head p { margin: 4px 0 0; color: var(--muted); }
+    .result-count { color: var(--muted); font-size: .9rem; white-space: nowrap; }
+    .controls { display: flex; gap: 12px; margin: 22px 0 16px; }
+    .searchbox { flex: 1; position: relative; }
+    .searchbox span { position: absolute; left: 15px; top: 11px; color: #829089; font-size: 19px; }
+    .searchbox input { width: 100%; height: 48px; padding: 0 15px 0 44px; border: 1px solid var(--line); border-radius: 13px; outline: 0; background: white; color: var(--ink); }
+    .searchbox input:focus { border-color: #729a50; box-shadow: 0 0 0 3px rgba(185,243,109,.28); }
+    .fav-toggle { height: 48px; padding: 0 17px; border: 1px solid var(--line); border-radius: 13px; background: white; color: var(--ink); cursor: pointer; font-weight: 700; }
+    .fav-toggle[aria-pressed="true"] { background: #e8f7d6; border-color: #c8e3a8; }
+    .filters { display: flex; gap: 9px; flex-wrap: wrap; margin: 0 0 25px; }
+    .filter { cursor: pointer; padding: 8px 14px; border-radius: 99px; border: 1px solid var(--line); background: transparent; color: #4b5852; font-weight: 650; font-size: .88rem; }
+    .filter:hover { border-color: #a8bd98; }
+    .filter[aria-pressed="true"] { background: var(--night); border-color: var(--night); color: white; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card { padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); box-shadow: 0 4px 16px rgba(25,42,34,.025); display: flex; flex-direction: column; min-height: 260px; transition: transform .16s ease, box-shadow .16s ease; }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .identity { display: flex; gap: 13px; align-items: center; }
+    .provider-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 15px; background: #edf4e7; color: #365626; font-size: 24px; flex: none; }
+    .provider-icon.blue { background: #e8f0ff; color: #31589b; }
+    .provider-icon.red { background: #fff0ee; color: #b54032; }
+    .provider-icon.gold { background: #fff6da; color: #8c6b13; }
+    .identity h3 { margin: 0; font-size: 1.12rem; letter-spacing: -.025em; }
+    .type { color: var(--muted); font-size: .83rem; }
+    .heart { border: 0; background: transparent; font-size: 22px; color: #a3ada7; cursor: pointer; padding: 2px 4px; line-height: 1; }
+    .heart[aria-pressed="true"] { color: #d94d48; }
+    .card p { color: #52605a; margin: 19px 0 14px; font-size: .94rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 22px; }
+    .tag { padding: 4px 9px; background: #f1f4ef; color: #56625c; border-radius: 7px; font-size: .76rem; }
+    .card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; }
+    .availability { font-size: .78rem; color: #64716c; }
+    .open-link { text-decoration: none; display: inline-flex; gap: 8px; align-items: center; border-radius: 10px; background: var(--green); color: #182317; padding: 10px 14px; font-weight: 800; font-size: .86rem; white-space: nowrap; }
+    .open-link:hover { background: #a6e952; }
+    .empty { grid-column: 1/-1; padding: 42px; text-align: center; border: 1px dashed #cbd4ca; border-radius: 18px; color: var(--muted); }
+    .note { margin-top: 26px; padding: 17px 19px; border-radius: 14px; background: #e9eee6; color: #536058; font-size: .86rem; }
+    .note strong { color: var(--ink); }
+    footer { border-top: 1px solid var(--line); padding: 22px 0 30px; color: #738078; font-size: .82rem; }
+    footer .shell { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 28px, 560px); }
+      .topbar { height: 64px; }
+      .topnote { font-size: .76rem; }
+      .hero-wrap { padding: 18px 0 36px; }
+      .hero { grid-template-columns: 1fr; gap: 25px; }
+      .hero-panel { min-height: 170px; }
+      .panel-copy { margin-top: 58px; }
+      .hero-panel::after { width: 150px; height: 150px; right: -22px; top: -40px; }
+      .ball { font-size: 58px; width: 100px; height: 100px; right: 22px; }
+      main { padding-top: 29px; }
+      .section-head { align-items: flex-start; flex-direction: column; gap: 5px; }
+      .controls { flex-direction: column; }
+      .fav-toggle { width: 100%; }
+      .grid { grid-template-columns: 1fr; }
+      .card { min-height: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <div class="top-wrap">
+    <header class="topbar shell">
+      <a class="brand" href="#accueil" aria-label="Sport Libre, accueil"><span class="brand-mark">▶</span> sport libre</a>
+      <span class="topnote">Le sport, simplement.</span>
+    </header>
+    <section class="hero-wrap" id="accueil">
+      <div class="hero shell">
+        <div>
+          <div class="eyebrow">Le guide des directs officiels</div>
+          <h1>Trouve des directs.<br>Gratuits et officiels.</h1>
+          <p>Retrouve les plateformes qui proposent des matchs, compétitions et rediffusions gratuites. Choisis un sport et ouvre le diffuseur officiel.</p>
+        </div>
+        <div class="hero-panel" aria-hidden="true">
+          <div class="ball">⚽</div>
+          <div class="panel-copy"><strong>Un seul point de départ</strong><span>Des liens directs vers les plateformes de diffusion.</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <main class="shell">
+    <div class="section-head">
+      <div><h2>Où regarder ?</h2><p>Des services officiels à explorer gratuitement.</p></div>
+      <span class="result-count" id="result-count" aria-live="polite"></span>
+    </div>
+    <div class="controls">
+      <label class="searchbox"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Rechercher un sport ou une plateforme…" aria-label="Rechercher un sport ou une plateforme"></label>
+      <button id="favorites-only" class="fav-toggle" type="button" aria-pressed="false">♡ Mes favoris</button>
+    </div>
+    <nav class="filters" id="filters" aria-label="Filtrer par sport"></nav>
+    <section class="grid" id="platforms" aria-label="Plateformes officielles"></section>
+    <aside class="note"><strong>À savoir :</strong> les droits de diffusion dépendent de la compétition et du pays. Un service gratuit peut demander la création d’un compte, et certains directs peuvent ne pas être disponibles dans ta région. Cette appli renvoie uniquement vers les sites officiels des diffuseurs.</aside>
+  </main>
+
+  <footer><div class="shell"><span>Sport Libre · Guide indépendant de diffusion</span><span>Les logos et contenus appartiennent à leurs diffuseurs respectifs.</span></div></footer>
+
+  <script>
+    const platforms = [
+      {
+        id: "eurovision", name: "Eurovision Sport", kind: "Multisports", icon: "◉", tone: "green",
+        description: "Directs gratuits, rediffusions et temps forts dans de nombreuses disciplines. Consulte le programme pour voir ce qui est disponible aujourd’hui.",
+        sports: ["Athlétisme", "Cyclisme", "Natation", "Gymnastique", "Rugby", "Sports automobiles", "Basket"],
+        availability: "Certains événements sont soumis à des restrictions territoriales.",
+        url: "https://eurovisionsport.com/"
+      },
+      {
+        id: "fifa", name: "FIFA+ sur DAZN", kind: "Football", icon: "⚽", tone: "blue",
+        description: "Retrouve les matchs FIFA+ gratuits, les archives et les programmes sur DAZN. Les directs disponibles dépendent des droits dans ton pays.",
+        sports: ["Football", "Football féminin", "Compétitions de jeunes", "Archives"],
+        availability: "La liste des matchs en direct est affichée sur le site.",
+        url: "https://www.dazn.com/"
+      },
+      {
+        id: "francetv", name: "France.tv Sport", kind: "Diffuseur public", icon: "▰", tone: "red",
+        description: "Retrouve les directs, rediffusions et programmes sportifs proposés par France Télévisions selon sa programmation.",
+        sports: ["Cyclisme", "Rugby", "Athlétisme", "Tennis", "Sports olympiques"],
+        availability: "La sélection et les directs changent selon la programmation.",
+        url: "https://www.france.tv/sport/"
+      },
+    ];
+    const categories = ["Tous", "Football", "Athlétisme", "Basket", "Cyclisme", "Natation", "Gymnastique", "Rugby", "Sports automobiles"];
+    const savedKey = "sport-libre-favorites-v1";
+    let favorites = new Set();
+    try { favorites = new Set(JSON.parse(localStorage.getItem(savedKey) || "[]")); } catch { favorites = new Set(); }
+    let activeCategory = "Tous";
+    let favoritesOnly = false;
+    const filtersNode = document.querySelector("#filters");
+    const listNode = document.querySelector("#platforms");
+    const searchNode = document.querySelector("#search");
+    const favoriteToggle = document.querySelector("#favorites-only");
+
+    function drawFilters() {
+      filtersNode.innerHTML = categories.map(category => `<button class="filter" type="button" aria-pressed="${category === activeCategory}" data-category="${category}">${category}</button>`).join("");
+    }
+    function drawCards() {
+      const query = searchNode.value.trim().toLocaleLowerCase("fr");
+      const visible = platforms.filter(item => {
+        const matchesCategory = activeCategory === "Tous" || item.sports.some(sport => sport.toLocaleLowerCase("fr") === activeCategory.toLocaleLowerCase("fr"));
+        const searchText = `${item.name} ${item.kind} ${item.description} ${item.sports.join(" ")}`.toLocaleLowerCase("fr");
+        return matchesCategory && (!query || searchText.includes(query)) && (!favoritesOnly || favorites.has(item.id));
+      });
+      document.querySelector("#result-count").textContent = `${visible.length} plateforme${visible.length > 1 ? "s" : ""}`;
+      if (!visible.length) {
+        listNode.innerHTML = `<div class="empty">Aucun résultat${favoritesOnly ? " dans tes favoris" : ""}. Essaie un autre sport ou une autre recherche.</div>`;
+        return;
+      }
+      listNode.innerHTML = visible.map(item => `
+        <article class="card">
+          <div class="card-top">
+            <div class="identity"><span class="provider-icon ${item.tone}" aria-hidden="true">${item.icon}</span><div><h3>${item.name}</h3><span class="type">${item.kind}</span></div></div>
+            <button class="heart" type="button" data-favorite="${item.id}" aria-label="${favorites.has(item.id) ? "Retirer des" : "Ajouter aux"} favoris : ${item.name}" aria-pressed="${favorites.has(item.id)}">${favorites.has(item.id) ? "♥" : "♡"}</button>
+          </div>
+          <p>${item.description}</p>
+          <div class="tags">${item.sports.map(sport => `<span class="tag">${sport}</span>`).join("")}</div>
+          <div class="card-bottom"><span class="availability">${item.availability}</span><a class="open-link" href="${item.url}" target="_blank" rel="noopener noreferrer">Voir le site <span aria-hidden="true">↗</span></a></div>
+        </article>`).join("");
+    }
+    filtersNode.addEventListener("click", event => {
+      const button = event.target.closest("[data-category]");
+      if (!button) return;
+      activeCategory = button.dataset.category;
+      drawFilters(); drawCards();
+    });
+    listNode.addEventListener("click", event => {
+      const button = event.target.closest("[data-favorite]");
+      if (!button) return;
+      const id = button.dataset.favorite;
+      favorites.has(id) ? favorites.delete(id) : favorites.add(id);
+      try { localStorage.setItem(savedKey, JSON.stringify([...favorites])); } catch {}
+      drawCards();
+    });
+    favoriteToggle.addEventListener("click", () => {
+      favoritesOnly = !favoritesOnly;
+      favoriteToggle.setAttribute("aria-pressed", String(favoritesOnly));
+      favoriteToggle.textContent = favoritesOnly ? "♥ Voir tout" : "♡ Mes favoris";
+      drawCards();
+    });
+    searchNode.addEventListener("input", drawCards);
+    drawFilters();
+    drawCards();
+  </script>
+</body>
+</html>
